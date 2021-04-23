@@ -7,8 +7,20 @@ import '@/styles/reset.less'
 import router from '@/router/index'
 
 // 引入移动端开发插件
-import { Toast } from 'vant';
-Vue.use(Toast);
+import {
+  Toast,
+  Icon,
+  Uploader,
+  Dialog,
+  Field,
+  ActionSheet
+} from 'vant';
+Vue.use(Toast)
+  .use(Icon)
+  .use(Uploader)
+  .use(Dialog)
+  .use(Field)
+.use(ActionSheet);
 
 Vue.config.productionTip = false
 

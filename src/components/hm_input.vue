@@ -1,5 +1,5 @@
 <template>
- <input type="text"
+ <input 
   class="hminput"
  :class="{success:flag,error:!flag}"
          @input='handlerInput'
@@ -14,6 +14,7 @@ export default {
         rules: {
       // 定义数据的校验规则
       type: RegExp
+     
     },
     },
     msg:{

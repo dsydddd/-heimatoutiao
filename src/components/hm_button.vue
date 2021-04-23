@@ -34,6 +34,7 @@ export default {
   color: #fff;
   font-weight: bold;
   font-size: 20px;
+  margin: 0 auto;
 }
 .success {
   background-color: rgb(82, 165, 26);

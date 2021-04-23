@@ -11,8 +11,17 @@
           :rules="/^1[35789]\d{9}$/"
           msg="请输入11位手机号"
         ></hm_input>
+          <hm_input
+           type="text"
+          v-model="user.nickname"
+          placeholder="请输入昵称"
+          :rules="/^.{2,10}$/"
+          msg="请输入2~10位的昵称"
+        ></hm_input>
+
+
         <hm_input
-        type="password"
+         type="password"
           v-model="user.password"
           placeholder="请输入密码"
           :rules="/^.{3,16}$/"
@@ -21,9 +30,9 @@
       </div>
       <p class="tips">
         没有账号？
-        <a href="#/register" class="">去注册</a>
+        <a href="#/login" class="">去登录</a>
       </p>
-      <hm_button @click="login" type="success">登陆</hm_button>
+      <hm_button @click="register" type="danger">注册</hm_button>
     </div>
   </div>
 </template>
@@ -31,7 +40,7 @@
 <script>
 import hm_button from "@/components/hm_button";
 import hm_input from "@/components/hm_input";
-import { userLogin } from "@/apis/user";
+import { userRegister } from "@/apis/user";
 export default {
   components: {
     hm_button,
@@ -40,26 +49,26 @@ export default {
   data() {
     return {
       user: {
-        username: "admin",
-        password: "1234",
+        username: "",
+        password: "",
+        nickname:""
       },
     };
   },
   methods: {
-    login() {
+    register() {
       if (
         /^1[35789]\d{9}$|^admin$/.test(this.user.username) &&
         /^.{3,16}$/.test(this.user.password)
       ) {
-        userLogin(this.user)
+        userRegister(this.user)
           .then((res) => {
-            console.log(res);
-            
-            if ((res.data.data.message = "登录成功")) {
-               localStorage.setItem('heimatoken',res.data.data.token)
-            this.$router.push({path:`/personal/${res.data.data.user.id}`})
+              console.log(res);
+            if ((res.data.data.message = "注册成功")) {
+              this.$toast.success("成功注册");
+              this.$router.push({ path:`/login`})
             } else {
-              this.$toast.fail("失败了");
+              this.$toast.fail("注册失败手机号码已经存在");
             }
           })
           .catch((err) => {
