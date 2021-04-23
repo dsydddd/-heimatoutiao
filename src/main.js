@@ -13,14 +13,18 @@ import {
   Uploader,
   Dialog,
   Field,
-  ActionSheet
+  ActionSheet,
+  Tab, Tabs 
 } from 'vant';
 Vue.use(Toast)
   .use(Icon)
   .use(Uploader)
   .use(Dialog)
   .use(Field)
-.use(ActionSheet);
+  .use(ActionSheet)
+  .use(Tab)
+  .use(Tabs)
+
 
 Vue.config.productionTip = false
 

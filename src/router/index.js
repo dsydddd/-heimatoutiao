@@ -4,7 +4,13 @@ Vue.use(vueRouter)
 
 const router = new vueRouter({
     // 添加路由配置
-    routes: [{
+    routes: [
+        {
+            path: '/',
+            redirect: { name: 'index' }
+        },
+
+        {
             name: 'login',
             path: '/login',
 
@@ -27,13 +33,13 @@ const router = new vueRouter({
             path: '/edit_profile/:id',
             component: () => import('@/views/user/edit_profile.vue'),
         },
-
-
+      
+     
         {
             name: 'index',
             path: '/index',
 
-            component: () => import('@/views/user/index.vue'),
+            component: () => import('@/views/index.vue'),
         },
 
     ]
