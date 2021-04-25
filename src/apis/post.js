@@ -13,3 +13,8 @@ export const getPostDetail = (id) => {
         url: '/post/'+id , 
     })
 }
+export const likePost = (id) => {
+    return axios({
+        url: '/post_like/' + id
+    })
+}

@@ -24,6 +24,12 @@
       ></video>
       <div class="opt">
         <span class="like"> <van-icon name="good-job-o" />点赞 </span>
+  <span class="like"
+              :class="{active:post.has_like}"
+              @click="likeThisPostById">
+          <van-icon name="good-job-o" />{{post.like_length?post.like_length:'点赞'}}
+        </span>
+
         <span class="chat"> <van-icon name="chat" class="w" />微信 </span>
       </div>
     </div>
@@ -43,19 +49,23 @@
       </div>
       <div class="more">更多跟帖</div>
     </div>
+        <hm_commentFooter :post='post'></hm_commentFooter>
   </div>
 </template>
 
 <script>
-import {getPostDetail} from '@/apis/post'
+import {getPostDetail, likePost} from '@/apis/post'
 import { followUser, unFollowUser } from '@/apis/user.js'
+import hm_commentFooter from '@/components/hm_commentFooter.vue'
 export default {
     data(){
         return{
           post :{}
         }
     },
-    
+      components: {
+    hm_commentFooter
+  },
   async mounted(){
         let id =this.$route.params.id
         console.log(id);
@@ -74,7 +84,19 @@ export default {
       }
   this.post.has_follow = !this.post.has_follow
       this.$toast.success(res.data.message)
-        }
+        },
+
+         async likeThisPostById () {
+      let res = await likePost(this.post.id)
+      console.log(res);
+      if (res.data.message == '点赞成功') {
+        ++this.post.like_length
+      } else {
+        --this.post.like_length
+      }
+      this.post.has_like = !this.post.has_like
+      this.$toast.success(res.data.message)
+    },
 
     }
   
@@ -106,9 +128,12 @@ export default {
       font-size: 50px;
     }
   }
+  .articaldetail {
+  padding-bottom: 60px;
+}
   .active{
-      background-color: #666;
-      color: #fff;
+      background-color: #ff0;
+      color: red;
   }
   > span {
     padding: 5px 15px;
@@ -120,6 +145,10 @@ export default {
   }
 }
 .detail {
+   .active{
+      background-color: #ff0;
+      color: red;
+  }
   padding: 15px;
   .title {
     font-size: 18px;
