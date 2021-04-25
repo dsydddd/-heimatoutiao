@@ -9,6 +9,12 @@ const router = new vueRouter({
             path: '/',
             redirect: { name: 'index' }
         },
+        {
+            name: 'index',
+            path: '/index',
+
+            component: () => import('@/views/index.vue'),
+        },
 
         {
             name: 'login',
@@ -33,14 +39,13 @@ const router = new vueRouter({
             path: '/edit_profile/:id',
             component: () => import('@/views/user/edit_profile.vue'),
         },
-      
-     
         {
-            name: 'index',
-            path: '/index',
-
-            component: () => import('@/views/index.vue'),
+            name: 'post',
+            path: '/post/:id',
+            component: () => import('../views/post/postdetail.vue'),
         },
+     
+ 
 
     ]
 

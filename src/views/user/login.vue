@@ -57,7 +57,7 @@ export default {
             
             if ((res.data.data.message = "登录成功")) {
                localStorage.setItem('heimatoken',res.data.data.token)
-            this.$router.push({path:`/personal/${res.data.data.user.id}`})
+             this.$router.push({path:`/personal/${res.data.data.user.id}`})
             } else {
               this.$toast.fail("失败了");
             }

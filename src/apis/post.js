@@ -1,8 +1,15 @@
 import axios from '@/utils/myaxios'
 
-export const getPostList = (category) => {
+export const getPostList = (params) => {
     return axios({
          method: 'get',
-        url:  `/post?category=${category}`
+        url: `/post`,
+        params
+    })
+}
+export const getPostDetail = (id) => {
+    return axios({
+         method: 'get',
+        url: '/post/'+id , 
     })
 }

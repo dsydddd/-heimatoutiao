@@ -14,7 +14,10 @@ import {
   Dialog,
   Field,
   ActionSheet,
-  Tab, Tabs 
+  Tab, Tabs,
+  List,
+  PullRefresh
+  
 } from 'vant';
 Vue.use(Toast)
   .use(Icon)
@@ -24,6 +27,8 @@ Vue.use(Toast)
   .use(ActionSheet)
   .use(Tab)
   .use(Tabs)
+  .use(List)
+  .use(PullRefresh)
 
 
 Vue.config.productionTip = false

@@ -1,7 +1,7 @@
 import axios from '@/utils/myaxios'
-export const getCategory = () => {
+export const getCateList = () => {
     return axios({
          method: 'get',
-        url: `/category`,
+        url: '/category',
     })
 }
