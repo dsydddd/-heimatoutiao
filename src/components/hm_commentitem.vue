@@ -1,5 +1,9 @@
 <template>
   <div class="commentItem">
+
+    <hmcommentitem v-if="parent.parent"
+    :parent="parent.parent"
+    ></hmcommentitem>
     <div class="top">
       <div class="left">
         <span>{{parent.user.nickname}}</span> &nbsp;&nbsp;&nbsp;
@@ -12,7 +16,9 @@
 </template>
 
 <script>
+import hmcommentitem from '@/components/hm_commentitem'
 export default {
+  name:"hmcommentitem",
   props: {
     parent: {
       type: Object
