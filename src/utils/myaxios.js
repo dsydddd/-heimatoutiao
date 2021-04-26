@@ -23,7 +23,9 @@ axios.interceptors.response.use(function (response) {
     if (response.data.message == '用户信息验证失败!' || response.data.message == '用户信息验证失败') {
       Toast.fail('用户信息验证失败!')
       // this.$router.push({ name: 'login' })
-      window.location.href = '#/login'
+      console.log('拦截器拿到的路径', window.location.href);
+      
+      window.location.href = '#/login?redirect_url=' +window.location.href
     }
     // 对响应数据做点什么
     return response;

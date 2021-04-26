@@ -57,7 +57,15 @@ export default {
             
             if ((res.data.data.message = "登录成功")) {
                localStorage.setItem('heimatoken',res.data.data.token)
-             this.$router.push({path:`/personal/${res.data.data.user.id}`})
+                //  this.$router.push({path:`/personal/${res.data.data.user.id}`})
+                  let redirect = location.href.split('=')[1]
+              if (redirect) {
+                location.href = decodeURIComponent(redirect)
+              }
+              else {// 否则跳转到个人中心页// 跳转到个人中心页
+                this.$router.push({ path: `/personal/${res.data.data.user.id}` })
+              }
+
             } else {
               this.$toast.fail("失败了");
             }

@@ -10,7 +10,9 @@
         <em>{{post.comment_length}}</em>
       </span>
       <i class="iconfont iconshoucang"
-         :class="{active:post.has_star}"></i>
+         :class="{active:post.has_star}"
+         @click="starPost"
+         ></i>
       <i class="iconfont iconfenxiang"></i>
     </div>
     <div class="inputcomment"
@@ -26,6 +28,7 @@
 </template>
 
 <script>
+import {starPost} from '@/apis/post'
 export default {
   props: {
     post: {
@@ -36,6 +39,12 @@ export default {
   data () {
     return {
       isFocus: false
+    }
+  },methods:{
+   async starPost(){
+      let res = await  starPost(this.post.id)
+       this.post.has_star = !this.post.has_star
+      this.$toast.success(res.data.message)
     }
   }
 }

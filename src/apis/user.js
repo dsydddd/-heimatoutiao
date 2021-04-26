@@ -46,7 +46,18 @@ export const updateUserInfo = (id,data) => {
         // headers: { Authorization: localStorage.getItem('heimatoken') }
     })
 }
-
+// 7.获取用户关注列表数据
+export const getUserFollows = () => {
+    return axios({
+        url: `/user_follows`
+    })
+}
+// 8.获取用户收藏列表数据
+export const getUserStars = () => {
+    return axios({
+        url: `/user_star`
+    })
+}
 
 
 

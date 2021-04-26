@@ -16,9 +16,12 @@
         <span class="iconfont iconjiantou1"></span>
       </div>
     </router-link>
-    <hm_cell title="我的关注" desc="关注的用户"></hm_cell>
+    <hm_cell title="我的关注" desc="关注的用户"
+    @click.native="$router.push({path:'/myfollow'})"
+    ></hm_cell>
     <hm_cell title="我的跟帖" desc="跟帖/回复"></hm_cell>
-    <hm_cell title="我的收藏" desc="文章/视频"></hm_cell>
+    <hm_cell title="我的收藏" desc="文章/视频"
+     @click.native="$router.push({path:'/mystar'})"></hm_cell>
     <hm_cell title="设置"></hm_cell>
     <hm_button 
   

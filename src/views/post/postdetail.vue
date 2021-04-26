@@ -3,7 +3,9 @@
     <div class="header">
       <div class="left">
         <van-icon name="arrow-left back" @click="$router.back()" />
-        <span class="iconfont iconnew new"></span>
+        <span class="iconfont iconnew new"
+        @click="$router.push({name:'index'})"
+        ></span>
       </div>
       <span @click="followUserById" :class="{ active: post.has_follow }"
         >{{ post.has_follow ? "已关注" : "关注" }}
