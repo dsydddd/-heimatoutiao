@@ -25,7 +25,6 @@
         v-else
       ></video>
       <div class="opt">
-        <span class="like"> <van-icon name="good-job-o" />点赞 </span>
   <span class="like"
               :class="{active:post.has_like}"
               @click="likeThisPostById">

@@ -1,8 +1,10 @@
 import axios from 'axios'
 
+
 axios.defaults.baseURL = 'http://157.122.54.189:9083'
 
 // 添加请求拦截器
+import { Toast } from 'vant'
 axios.interceptors.request.use(function (config) {
     console.log(config);
     // 在发送请求之前做些什么
