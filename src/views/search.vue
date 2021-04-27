@@ -5,7 +5,9 @@
             @click="$router.back()"></span>
       <van-search v-model.trim="userKey"
                   placeholder="请输入搜索关键词"
-                  shape="round">
+                  shape="round"
+                    @search="search"
+                  >
       </van-search>
       <div @click="search">搜索</div>
     </div>
@@ -13,7 +15,9 @@
       <h2>历史记录</h2>
       <p v-for='item in historyList'
          :key='item'
-         @click='searchByHistory(item)'>{{item}}</p>
+         @click='searchByHistory(item)'
+      
+         >{{item}}</p>
     </div>
     <div class="historyList">
       <h2>搜索结果</h2>

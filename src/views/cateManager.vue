@@ -9,8 +9,8 @@
       <h3>点击删除频道</h3>
       <div class="list">
         <span
-        
-         v-for="value in cateList" :key="value.id" @click="removeCate(value)">{{
+         :class="{activeStyle:value.id ==isclass}"
+         v-for="(value) in cateList" :key="value.id" @click="removeCate(value)">{{
           value.name
         }}</span>
       </div>
@@ -18,7 +18,11 @@
     <div class="addCate">
       <h3>点击添加频道</h3>
       <div class="list">
-        <span v-for="value in unaddcateList" :key="value.id" @click="addCate(value)">{{
+        
+        <span  
+        v-for="value in unaddcateList" :key="value.id" @click="addCate(value)" 
+        :class="{activeStyle:value.id ==isclass}"
+        >{{
           value.name
         }}</span>
       </div>
@@ -37,6 +41,7 @@ export default {
     return {
       cateList: [],
       unaddcateList: [],
+      isclass:0
     };
   },
   async mounted() {
@@ -58,6 +63,11 @@ if(!this.cateList){
   },
   methods: {
     removeCate(value) {
+      console.log(value.id);
+      
+       this.isclass = value.id
+       console.log( this.isclass);
+       
       this.unaddcateList.push(value);
       this.cateList = this.cateList.filter((v) => {
         return v.id != value.id;
@@ -65,8 +75,11 @@ if(!this.cateList){
 // 存储起来
       localStorage.setItem('cateList',JSON.stringify(this.cateList))
       localStorage.setItem('unaddcateList',JSON.stringify(this.unaddcateList))
+      this.isclass=!this.isclass
     },
       addCate(value) {
+         console.log(value.id);
+       this.isclass = value.id
       this.cateList.push(value);
       this.unaddcateList = this.unaddcateList.filter((v) => {
         return v.id != value.id;
@@ -74,6 +87,7 @@ if(!this.cateList){
 // 存储起来
         localStorage.setItem('cateList',JSON.stringify(this.cateList))
       localStorage.setItem('unaddcateList',JSON.stringify(this.unaddcateList))
+      this.isclass=!this.isclass
     },
 
   },
@@ -97,8 +111,8 @@ if(!this.cateList){
       margin: 5px;
       padding: 10px 15px;
       text-align: center;
-      &:hover {
-        background-color: #ccc;
+    .activeStyle {
+        background-color: red;
         color: #fff;
       }
     }
