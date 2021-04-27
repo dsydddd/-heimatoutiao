@@ -3,6 +3,7 @@
 
     <hmcommentitem v-if="parent.parent"
     :parent="parent.parent"
+    @send="replayComment"
     ></hmcommentitem>
     <div class="top">
       <div class="left">
@@ -16,7 +17,7 @@
 </template>
 
 <script>
-import hmcommentitem from '@/components/hm_commentitem'
+
 export default {
   name:"hmcommentitem",
   props: {

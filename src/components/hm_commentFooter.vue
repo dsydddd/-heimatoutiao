@@ -1,54 +1,95 @@
 <template>
   <div class="comment">
-    <div class="addcomment"
-         v-show='!isFocus'>
-      <input type="text"
-             placeholder="写跟帖"
-             @click="isFocus=!isFocus" />
-      <span class="comment"
-       @click="$router.push({path:`/comment/${post.id}`})">
+    <div class="addcomment" v-show="!isFocus">
+      <input type="text" placeholder="写跟帖" @click="isFocus = !isFocus" />
+      <span
+        class="comment"
+        @click="$router.push({ path: `/comment/${post.id}` })"
+      >
         <i class="iconfont iconpinglun-"></i>
-        <em>{{post.comment_length}}</em>
+        <em>{{ post.comment_length }}</em>
       </span>
-      <i class="iconfont iconshoucang"
-         :class="{active:post.has_star}"
-         @click="starPost"
-         ></i>
+      <i
+        class="iconfont iconshoucang"
+        :class="{ active: post.has_star }"
+        @click="starPost"
+      ></i>
       <i class="iconfont iconfenxiang"></i>
     </div>
-    <div class="inputcomment"
-         v-show='isFocus'>
-      <textarea ref='commtext'
-                rows="5"></textarea>
+    <div class="inputcomment" v-show="isFocus">
+      <textarea ref="commtext" rows="5" v-model="content"
+      @keyup.enter="sendComent"
+      ></textarea>
       <div>
-        <span>发 送</span>
-        <span @click="isFocus=!isFocus">取 消</span>
+        <span @click="sendComent">发 送</span>
+        <span @click="cancelReplay">取 消</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {starPost} from '@/apis/post'
+import { starPost, pubCommentList } from "@/apis/post";
 export default {
   props: {
     post: {
       type: Object,
-      required: true
+      required: true,
+    },
+    commentObj: {
+      type: Object,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      isFocus: false,
+      content: "",
+    };
+  },
+  watch: {
+    commentObj() {
+      console.log("子组件拿到的", this.commentObj);
+      if (this.commentObj) {
+        this.isFocus = true;
+      }
+    },
+  },
+
+  methods: {
+    async starPost() {
+      let res = await starPost(this.post.id);
+      this.post.has_star = !this.post.has_star;
+      this.$toast.success(res.data.message);
+    },
+    async sendComent() {
+      if (this.content.length == 0) {
+        this.$toast.fail("请输入评论内容");
+        return;
+      }
+      let data = { content: this.content };
+      if (this.commentObj) {
+        data.parent_id = this.commentObj.id;
+      }
+
+      // 2.发起评论请求
+      let res = await pubCommentList(this.post.id, data);
+      console.log(res);
+      // 1.给提示
+      this.$toast.success("发表评论成功");
+      // 2.隐藏输入框
+      this.isFocus = false;
+      // 3.清空之前输入的内容
+      this.content = "";
+      // 4.页面内容的刷新-子组件要告诉父组件进行列表数据的刷新
+      this.$emit("refresh");
+    },
+    cancelReplay(){
+      this.isFocus = !this.isFocus
+      this.$emit('cancel')
     }
   },
-  data () {
-    return {
-      isFocus: false
-    }
-  },methods:{
-   async starPost(){
-      let res = await  starPost(this.post.id)
-       this.post.has_star = !this.post.has_star
-      this.$toast.success(res.data.message)
-    }
-  }
-}
+};
 </script>
 
 <style lang="less" scoped>
