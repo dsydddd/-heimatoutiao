@@ -38,3 +38,8 @@ export const pubCommentList = (id,data) => {
        data
     })
 }
+export const searchPost = (keyword) => {
+    return axios({
+      url: `/post_search?keyword=` + keyword
+    })
+  }

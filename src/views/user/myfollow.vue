@@ -18,7 +18,8 @@
           <p>{{value.nickname}}</p>
           <span>2019-9-9</span>
         </div>
-        <span  @click="cancelFolllow(value.id,index)"
+        <span  @click="cancelFolllow(value.id,index)
+        "
         >取消关注</span>
       </div>
     </div>

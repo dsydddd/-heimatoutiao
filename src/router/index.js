@@ -58,15 +58,29 @@ const router = new vueRouter({
             name:'comment',
             path:'/comment/:id',
             component: () => import('@/views/user/comment.vue')
-        }
- 
+        },
+          {
+            name: 'cateManager',
+            path: '/cateManager',
+            component: () => import('@/views/cateManager.vue')
+        },
+        {
+            name: 'search',
+            path: '/search',
+            component: () => import('@/views/search.vue')
+          },
 
     ]
 
 })
 import { Toast } from 'vant'
+
+
 router.beforeEach((to, from, next) => {
-    if (to.path.indexOf('/personal/') !== -1){
+    let arr = ['personal', 'edit_profile']
+    console.log('to---', to);
+    if (arr.indexOf(to.name) !== -1) {
+        
       let token=  localStorage.getItem('heimatoken')
         if (token) {
             console.log(1);

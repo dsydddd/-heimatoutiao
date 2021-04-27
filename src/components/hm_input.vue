@@ -4,7 +4,6 @@
  :class="{success:flag,error:!flag}"
          @input='handlerInput'
          @blur='handlerBlur'
- 
  >
 </template>
 

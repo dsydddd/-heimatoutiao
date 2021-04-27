@@ -5,7 +5,9 @@
       <div class="logo">
         <span class="iconfont iconnew"></span>
       </div>
-      <div class="search">
+      <div class="search"
+       @click="$router.push({path:'/search'})"
+      >
         <van-icon name="search" />
         <span>搜索商品</span>
       </div>
@@ -27,9 +29,7 @@
           :immediate-check="false"
           @load="onLoad"
         >
-          <van-pull-refresh 
-          v-model="cate.isLoading"
-           @refresh="onRefresh">
+          <van-pull-refresh v-model="cate.isLoading" @refresh="onRefresh">
             <hm_postBlock
               v-for="item in cate.postlist"
               :key="item.id"
@@ -62,12 +62,33 @@ export default {
     hm_postBlock,
   },
   async mounted() {
+    document.querySelector(".van-sticky").onclick =(e) => {
+      console.log(e.target.className);
+      if (e.target.className.indexOf("van-sticky") !=-1) {
+        // 说明点击的位置是入口位置
+        this.$router.push({ name: "cateManager" });
+      }
+    };
     // 获取栏目数据
     // let res = await getCateList()
     // this.cateList = res.data.data
     // console.log(res.data.data);
-    let res = await getCateList();
-    this.cateList = res.data.data;
+    // let res = await getCateList();
+    // this.cateList = res.data.data;
+    this.cateList = JSON.parse(localStorage.getItem('cateList') || '[]')
+    if (this.cateList.length == 0) {
+      // 页面一加载完毕：获取栏目数据
+      let res = await getCateList()
+      // console.log(res.data.data);
+      // 这个数据现在只有 id  name  is_top，并没有存储新闻数据的数组
+      this.cateList = res.data.data
+    } else { // 有本地存储数据，那么就需要手动的添加 “关注”和“头条”
+      if (localStorage.getItem('heimatoken')) {
+        this.cateList.unshift({ id: 0, name: '关注', is_top: 1 }, { id: 999, name: '头条', is_top: 1 })
+      } else {
+        this.cateList.unshift({ id: 999, name: '头条', is_top: 1 })
+      }
+    }
 
     // 数据改造--重点 获取到的标签栏目 内容进行数据改造
     // 🧨🧨 在每个栏目中添加一个保存新闻数据的空数组 后面各取各需
@@ -83,7 +104,7 @@ export default {
         pageIndex: "1",
         loading: false,
         finished: false,
-        isLoading:false,
+        isLoading: false,
       };
     });
     console.log(this.cateList);
@@ -100,14 +121,12 @@ export default {
     },
   },
   methods: {
-   async onRefresh() {
-      this.cateList[this.active].pageIndex=1,
-      this.cateList[this.active].postlist.length=0
+    async onRefresh() {
+      (this.cateList[this.active].pageIndex = 1),
+        (this.cateList[this.active].postlist.length = 0);
 
-
-     await this.getpost();
-         this.$toast('刷新成功')
-     
+      await this.getpost();
+      this.$toast("刷新成功");
     },
     onLoad() {
       this.cateList[this.active].pageIndex++;
@@ -134,8 +153,8 @@ export default {
       this.cateList[this.active].postlist.push(...current);
       //  本次加载完成后 loading重置为false
       this.cateList[this.active].loading = false;
-       //  本次加载完成后 isLoading重置为false
-        this.cateList[this.active].isLoading = false;
+      //  本次加载完成后 isLoading重置为false
+      this.cateList[this.active].isLoading = false;
       // 判断数据是否已全部加载完毕：我要求6条数据，结果返回的数量小于6，说明真没有数据了
       if (current.length < this.cateList[this.active].pageSize) {
         this.cateList[this.active].finished = true;
@@ -148,13 +167,31 @@ export default {
 
 <style lang="less" scoped>
 .index {
+  /deep/ .van-sticky {
+    padding-right: 44px;
+
+    &::before {
+      content: "+";
+      width: 44px;
+      height: 44px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: red;
+      color: #fff;
+      line-height: 38px;
+      text-align: center;
+      font-size: 30px;
+    }
+  }
+
   .header {
     height: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 10px;
-    background-color: #f00;
+    background-color: orange;
     .logo {
       color: #fff;
       .iconnew {

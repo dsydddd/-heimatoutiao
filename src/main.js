@@ -16,9 +16,11 @@ import {
   ActionSheet,
   Tab, Tabs,
   List,
-  PullRefresh
+  PullRefresh,
+  Search
   
 } from 'vant';
+
 Vue.use(Toast)
   .use(Icon)
   .use(Uploader)
@@ -29,6 +31,7 @@ Vue.use(Toast)
   .use(Tabs)
   .use(List)
   .use(PullRefresh)
+  .use(Search)
 
 
 Vue.config.productionTip = false
