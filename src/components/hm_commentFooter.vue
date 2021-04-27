@@ -38,7 +38,7 @@ export default {
     },
     commentObj: {
       type: Object,
-      required: true,
+      default: null
     },
   },
   data() {

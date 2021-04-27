@@ -3,14 +3,14 @@
 
     <hmcommentitem v-if="parent.parent"
     :parent="parent.parent"
-    @send="replayComment"
+    @replay="hanlderReplay"
     ></hmcommentitem>
     <div class="top">
       <div class="left">
         <span>{{parent.user.nickname}}</span> &nbsp;&nbsp;&nbsp;
         <span>2分钟前</span>
       </div>
-      <span>回复</span>
+      <span @click="hanlderReplay(parent)">回复</span>
     </div>
     <div class="bottom">{{parent.content}}</div>
   </div>
@@ -23,6 +23,11 @@ export default {
   props: {
     parent: {
       type: Object
+    }
+  },
+  methods:{
+    hanlderReplay(v){
+      this.$emit('replay',v)
     }
   }
 }

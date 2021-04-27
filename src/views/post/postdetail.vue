@@ -14,7 +14,7 @@
     <div class="detail">
       <div class="title">{{ post.title }}</div>
       <div class="desc">
-        <span>{{ post.user.nickname }}</span> &nbsp;&nbsp;
+        <span>{{post.user.nickname}}</span> &nbsp;&nbsp;
         <span>2019-9-9</span>
       </div>
       <div class="content" v-html="post.content" v-if="(post.type == 1)"></div>
@@ -61,7 +61,9 @@ import hm_commentFooter from '@/components/hm_commentFooter.vue'
 export default {
     data(){
         return{
-          post :{}
+          post :{
+            user:{}
+          }
         }
     },
       components: {
